@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface Message {
   id: number;
@@ -19,6 +20,7 @@ const ChatInterface: React.FC = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [conversationStep, setConversationStep] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
   
   // Mia's responses
   const miaResponses = [
@@ -47,7 +49,7 @@ const ChatInterface: React.FC = () => {
       sender: 'user'
     };
     
-    setMessages(prevMessages => [...prevMessages, userMessage]);
+    setMessages(prev => [...prev, userMessage]);
     setNewMessage('');
     
     // Show Mia's response after delays if there's a next step
@@ -64,11 +66,19 @@ const ChatInterface: React.FC = () => {
             sender: 'mia'
           };
           
-          setMessages(prevMessages => [...prevMessages, miaMessage]);
+          setMessages(prev => [...prev, miaMessage]);
           setIsTyping(false);
-          setConversationStep(conversationStep + 1);
-        }, 5000); // 5 second typing delay
-      }, 1000); // 1 second initial delay
+          
+          // After final Mia message, wait 2s then navigate away
+          if (conversationStep === miaResponses.length - 1) {
+            setTimeout(() => {
+              navigate('/match');
+            }, 4000);
+          }
+          
+          setConversationStep(prev => prev + 1);
+        }, 5000); // 5s typing
+      }, 1000); // 1s initial delay
     } else {
       // No more responses from Mia
       setIsTyping(false);
