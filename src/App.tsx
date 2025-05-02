@@ -10,7 +10,7 @@ function App() {
   return (
     <Router>
       <div className="h-screen flex flex-col">
-        <main className="flex-grow pb-16">
+        <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
