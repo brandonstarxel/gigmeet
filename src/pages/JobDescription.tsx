@@ -18,7 +18,7 @@ const JobDescription: React.FC = () => {
   // Sample job data - in a real application, this would come from an API or props
   const jobData: JobDetail = {
     title: "DJ Needed - Mia's Birthday Party",
-    company: "Parties and Events",
+    company: "Parties and",
     location: "London, UK",
     type: "One-time gig",
     salary: "£12/hour",

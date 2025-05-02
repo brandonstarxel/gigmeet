@@ -4,35 +4,27 @@ interface Message {
   id: number;
   text: string;
   sender: 'user' | 'mia';
-  timestamp: Date;
 }
 
 const ChatInterface: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
-      text: "Hi there! Thanks for applying to be the DJ at my birthday party! Do you have any questions for me?",
-      sender: 'mia',
-      timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000) // 1 day ago
+      text: "hey Raymond, thanks for applying! can u make a 7pm start on 21 June?",
+      sender: 'mia'
     }
   ]);
   
   const [newMessage, setNewMessage] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const [conversationStep, setConversationStep] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
-  // Automatic responses from Mia based on keywords
-  const miaResponses: { [key: string]: string } = {
-    'equipment': "I have some basic speakers, but you should bring your own DJ equipment. Is that okay?",
-    'payment': "The payment is £12/hour for 4 hours, so that's £48 total. I can pay in cash at the end of the night!",
-    'address': "The party is at 123 Chelsea Ave in London. I'll send the full details closer to the date!",
-    'playlist': "I love hip hop and afrobeats! Some of my favorites are Burna Boy, Wizkid, Drake, and Doja Cat.",
-    'time': "The party starts at a 8pm, but I need you there from 7pm to set up. You'll play from 10pm until 2am.",
-    'dress code': "No specific dress code for you, just dress comfortably but still looking good for a party!",
-    'guests': "We're expecting about 50 people, mostly friends from university and some colleagues.",
-    'hello': "Hey! So excited to chat with you about DJing my birthday party!",
-    'hi': "Hey there! Thanks for being interested in the gig!",
-    'experience': "Your experience sounds great! I'm not too picky, just want someone who can read the crowd and keep everyone dancing!"
-  };
+  // Mia's responses
+  const miaResponses = [
+    "do u have your own DJ set?",
+    "sure that's chill, thank youuu see you then :)"
+  ];
   
   // Auto-scroll to bottom when messages change
   useEffect(() => {
@@ -52,58 +44,35 @@ const ChatInterface: React.FC = () => {
     const userMessage: Message = {
       id: messages.length + 1,
       text: newMessage,
-      sender: 'user',
-      timestamp: new Date()
+      sender: 'user'
     };
     
     setMessages(prevMessages => [...prevMessages, userMessage]);
     setNewMessage('');
     
-    // Check for keywords and generate Mia's response
-    setTimeout(() => {
-      let responded = false;
-      
-      for (const [keyword, response] of Object.entries(miaResponses)) {
-        if (newMessage.toLowerCase().includes(keyword.toLowerCase())) {
+    // Show Mia's response after delays if there's a next step
+    if (conversationStep < miaResponses.length) {
+      // Wait 1 second before showing typing indicator
+      setTimeout(() => {
+        setIsTyping(true);
+        
+        // Then wait 5 more seconds before showing Mia's response
+        setTimeout(() => {
           const miaMessage: Message = {
             id: messages.length + 2,
-            text: response,
-            sender: 'mia',
-            timestamp: new Date()
+            text: miaResponses[conversationStep],
+            sender: 'mia'
           };
           
           setMessages(prevMessages => [...prevMessages, miaMessage]);
-          responded = true;
-          break;
-        }
-      }
-      
-      // Default response if no keywords matched
-      if (!responded) {
-        const defaultResponses = [
-          "That sounds good! Any other questions about the party?",
-          "Great! I'm looking forward to having you DJ at my birthday!",
-          "Awesome! It's going to be such a fun night!",
-          "Thanks for letting me know! Anything else you're wondering about?",
-          "Perfect! I can't wait for the party!"
-        ];
-        
-        const randomResponse = defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
-        
-        const miaMessage: Message = {
-          id: messages.length + 2,
-          text: randomResponse,
-          sender: 'mia',
-          timestamp: new Date()
-        };
-        
-        setMessages(prevMessages => [...prevMessages, miaMessage]);
-      }
-    }, 1000);
-  };
-  
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          setIsTyping(false);
+          setConversationStep(conversationStep + 1);
+        }, 5000); // 5 second typing delay
+      }, 1000); // 1 second initial delay
+    } else {
+      // No more responses from Mia
+      setIsTyping(false);
+    }
   };
   
   return (
@@ -139,11 +108,25 @@ const ChatInterface: React.FC = () => {
               <div className={`chat-bubble ${message.sender === 'user' ? 'chat-bubble-primary' : 'bg-base-100'}`}>
                 {message.text}
               </div>
-              <div className="chat-footer opacity-50 text-xs flex gap-1 items-center">
-                {formatTime(message.timestamp)}
-              </div>
             </div>
           ))}
+          
+          {/* Typing indicator */}
+          {isTyping && (
+            <div className="chat chat-start mb-4">
+              <div className="chat-image avatar placeholder">
+                <div className="bg-primary text-primary-content rounded-full w-10">
+                  <span>MIA</span>
+                </div>
+              </div>
+              <div className="chat-bubble bg-base-100">
+                <div className="flex gap-1">
+                  <span className="loading loading-dots loading-xs"></span>
+                </div>
+              </div>
+            </div>
+          )}
+          
           <div ref={messagesEndRef} />
         </div>
         
@@ -156,8 +139,13 @@ const ChatInterface: React.FC = () => {
               onChange={e => setNewMessage(e.target.value)}
               placeholder="Type your message here..."
               className="input input-bordered flex-1"
+              disabled={isTyping || conversationStep > miaResponses.length}
             />
-            <button type="submit" className="btn btn-primary">
+            <button 
+              type="submit" 
+              className="btn btn-primary"
+              disabled={isTyping || conversationStep > miaResponses.length || newMessage.trim() === ''}
+            >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
               </svg>
