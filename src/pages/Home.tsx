@@ -1,8 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
-export default function HomePage() {
+export default function HomePage({ onNewNotification }: { onNewNotification: () => void }) {
+  const navigate = useNavigate();
+
+  const location = useLocation();
+  const timerRef = useRef<number | null>(null);
+
+  // Whatever you want to run 5 s later
+  const doSomething = () => {
+    onNewNotification();
+  };
+
+  useEffect(() => {
+    if (location.state?.startTimer) {
+      const delay = location.state.delay ?? 1000;  // or whatever default
+      timerRef.current = window.setTimeout(doSomething, delay);
+
+      // “Consume” the flag without triggering React-Router
+      // (first arg is the new state object, third is URL; leave pathname/search/hash unchanged)
+      window.history.replaceState({}, "", window.location.href);
+    }
+
+    return () => {
+      if (timerRef.current !== null) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, [location.state]);
+  
   // Mock data for gig listings
   const [gigs] = useState([
     {
@@ -31,14 +59,14 @@ export default function HomePage() {
     },
     {
       id: 3,
-      title: "Calc II tutoring",
-      description: "Help me prep for Monday’s integration quiz (2 hrs).",
-      price: "$25/hour",
-      location: "Library café",
+      title: "DJ Needed - Mia's Birthday Party",
+      description: "Seeking an experienced DJ to play my 23rd birthday party!! Especially into hip hop and afrobeats music. You can stay at the party afterwards and hang out :)",
+      price: "$12/hour",
+      location: "Hyde Park",
       postedAt: "6 h ago",
       postedBy: {
-        name: "Chloe Patel",
-        avatar: "/student3.jpg"
+        name: "Mia Wu",
+        avatar: "/miawu.png"
       }
     },
     {
@@ -66,6 +94,14 @@ export default function HomePage() {
       }
     }
   ]);
+
+  const handleViewDetails = (gig: typeof gigs[0]) => {
+    if (gig.postedBy.name === "Mia Wu") {
+      navigate("/job-description");
+    } else {
+      alert(`Viewing details for ${gig.title} by ${gig.postedBy.name}`);
+    }
+  };
 
   return (
     <div className="flex flex-col h-screen bg-base-100">
@@ -109,7 +145,12 @@ export default function HomePage() {
 
                 {/* action */}
                 <div className="card-actions justify-end mt-2">
-                  <button className="btn btn-sm btn-outline">View Details</button>
+                  <button 
+                    className="btn btn-sm btn-outline"
+                    onClick={() => handleViewDetails(gig)}
+                  >
+                    View Details
+                  </button>
                 </div>
               </div>
             </div>

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface JobDetail {
   title: string;
@@ -16,6 +17,13 @@ interface JobDetail {
 
 const JobDescription: React.FC = () => {
   // Sample job data - in a real application, this would come from an API or props
+  const navigate = useNavigate();
+  const handleClick = () => {
+    // You can put whatever you like in the state object
+    navigate('/', {
+      state: { startTimer: true, delay: 1000 }  // 5 000 ms = 5 s
+    });
+  };
   const jobData: JobDetail = {
     title: "DJ Needed - Mia's Birthday Party",
     company: "Parties and",
@@ -55,7 +63,7 @@ const JobDescription: React.FC = () => {
                 </div>
               </div>
               <div className="mt-4 md:mt-0">
-                <button className="btn btn-primary">Apply Now</button>
+                <button className="btn btn-primary" onClick={handleClick}>Apply Now</button>
               </div>
             </div>
           </div>
@@ -148,7 +156,7 @@ const JobDescription: React.FC = () => {
         <div className="card bg-base-100 shadow-xl">
           <div className="card-body">
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="btn btn-primary">Apply for this position</button>
+              <button className="btn btn-primary" onClick={handleClick}>Apply for this position</button>
               <button className="btn btn-outline">Save for later</button>
             </div>
           </div>
