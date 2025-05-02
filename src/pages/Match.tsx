@@ -4,8 +4,7 @@ interface Coworker {
   id: number;
   name: string;
   role: string;
-  avatarInitial: string;
-  avatarColor: string;
+  avatar: string;
 }
 
 const JobMatchPage: React.FC = () => {
@@ -24,10 +23,9 @@ const JobMatchPage: React.FC = () => {
   }, []);
   
   const coworkers: Coworker[] = [
-    { id: 1, name: "Alex Johnson", role: "Sound Engineer", avatarInitial: "AJ", avatarColor: "bg-primary" },
-    { id: 2, name: "Taylor Kim", role: "Event Host", avatarInitial: "TK", avatarColor: "bg-secondary" },
-    { id: 3, name: "Jordan Smith", role: "Lighting Technician", avatarInitial: "JS", avatarColor: "bg-accent" },
-    { id: 4, name: "Riley Lopez", role: "Photographer", avatarInitial: "RL", avatarColor: "bg-info" }
+    { id: 1, name: "Mia W", role: "Event Host", avatar: "/mia-profile-pic.jpg" },
+    { id: 2, name: "Brandon S", role: "Bartender", avatar: "/student2.jpg" },
+    { id: 3, name: "Riley L", role: "Photographer", avatar: "/student5.jpg" }
   ];
   
   return (
@@ -86,9 +84,9 @@ const JobMatchPage: React.FC = () => {
               <div className="space-y-4">
                 {coworkers.map(worker => (
                   <div key={worker.id} className="flex items-center gap-4">
-                    <div className="avatar placeholder">
-                      <div className={`${worker.avatarColor} text-base-100 rounded-full w-12`}>
-                        <span>{worker.avatarInitial}</span>
+                    <div className="avatar">
+                      <div className="w-12 rounded-full">
+                        <img src={worker.avatar} alt={worker.name} />
                       </div>
                     </div>
                     <div>
@@ -97,6 +95,28 @@ const JobMatchPage: React.FC = () => {
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          </div>
+          
+          {/* Get Paid card */}
+          <div className="card bg-base-100 shadow-xl">
+            <div className="card-body">
+              <h2 className="card-title text-2xl mb-4">Get Paid</h2>
+              <div className="space-y-4">
+                <button className="btn btn-primary w-full justify-start">
+                  <svg className="w-6 h-6 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585 1.02 3.445 1.664 3.445 2.775 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305h.003z" fill="#6772E5"/>
+                  </svg>
+                  Set Up Stripe Account
+                </button>
+                
+                <button className="btn btn-outline w-full justify-start">
+                  <svg className="w-6 h-6 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585 1.02 3.445 1.664 3.445 2.775 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305h.003z" fill="#6772E5"/>
+                  </svg>
+                  View Payment History
+                </button>
               </div>
             </div>
           </div>
