@@ -24,8 +24,8 @@ const JobMatchPage: React.FC = () => {
   
   const coworkers: Coworker[] = [
     { id: 1, name: "Mia W", role: "Event Host", avatar: "/miawu.png" },
-    { id: 2, name: "Brandon S", role: "Bartender", avatar: "/student2.jpg" },
-    { id: 3, name: "Riley L", role: "Photographer", avatar: "/student5.jpg" }
+    { id: 2, name: "Brandon S", role: "Bartender", avatar: "/brandon.jpg" },
+    { id: 3, name: "Danny DeVito", role: "Photographer", avatar: "/student5.jpg" }
   ];
   
   return (
