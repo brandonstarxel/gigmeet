@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Home, User, MessageSquare, Heart } from 'lucide-react';
+import { Home, User, MessageSquare, Map } from 'lucide-react';
 
 const Toolbar = ({ hasNewNotifications }: { hasNewNotifications: boolean }) => {
   return (
@@ -15,6 +15,8 @@ const Toolbar = ({ hasNewNotifications }: { hasNewNotifications: boolean }) => {
             <User className="w-5 h-5" />
             <span className="text-sm">Profile</span>
           </Link>
+
+          
 
           {/* Chat with badge */}
           <Link
@@ -49,9 +51,9 @@ const Toolbar = ({ hasNewNotifications }: { hasNewNotifications: boolean }) => {
             )}
           </Link>
 
-          <Link to="/match" className="flex flex-col items-center hover:text-gray-300">
-            <Heart className="w-5 h-5" />
-            <span className="text-sm">Matches</span>
+          <Link to="/map" className="flex flex-col items-center hover:text-gray-300">
+            <Map className="w-5 h-5" />
+            <span className="text-sm">Map</span>
           </Link>
         </div>
       </div>
