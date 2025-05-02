@@ -21,7 +21,7 @@ const JobDescription: React.FC = () => {
   const handleClick = () => {
     // You can put whatever you like in the state object
     navigate('/', {
-      state: { startTimer: true, delay: 4000 }  // 5 000 ms = 5 s
+      state: { startTimer: true, delay: 7000 }  // 5 000 ms = 5 s
     });
   };
   const jobData: JobDetail = {
