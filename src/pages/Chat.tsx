@@ -7,7 +7,7 @@ interface Message {
   sender: 'user' | 'mia';
 }
 
-const ChatInterface: React.FC = () => {
+const ChatInterface: React.FC<{ onStartChat: () => void }> = ({ onStartChat }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
@@ -21,6 +21,10 @@ const ChatInterface: React.FC = () => {
   const [conversationStep, setConversationStep] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    onStartChat();
+  }, [onStartChat]);
   
   // Mia's responses
   const miaResponses = [

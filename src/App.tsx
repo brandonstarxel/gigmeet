@@ -19,7 +19,7 @@ function App() {
             <Route path="/" element={<Home onNewNotification={() => setHasNewNotifications(true)} />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/job-description" element={<JobDescription />} />
-            <Route path="/chat" element={<Chat />} />
+            <Route path="/chat" element={<Chat onStartChat={() => setHasNewNotifications(false)} />} />
             <Route path="/match" element={<Match />} />
             <Route path="/map" element={<Map />} />
           </Routes>
