@@ -19,7 +19,7 @@ export default function HomePage({ onNewNotification }: { onNewNotification: () 
       const delay = location.state.delay ?? 1000;  // or whatever default
       timerRef.current = window.setTimeout(doSomething, delay);
 
-      // “Consume” the flag without triggering React-Router
+      // "Consume" the flag without triggering React-Router
       // (first arg is the new state object, third is URL; leave pathname/search/hash unchanged)
       window.history.replaceState({}, "", window.location.href);
     }
@@ -45,16 +45,28 @@ export default function HomePage({ onNewNotification }: { onNewNotification: () 
         avatar: "/student1.jpg"
       }
     },
+    // {
+    //   id: 2,
+    //   title: "DJ my birthday",
+    //   description: "3-hour set, bring your own controller. Pop & indie vibes.",
+    //   price: "$80",
+    //   location: "Student Union Hall",
+    //   postedAt: "2 h ago",
+    //   postedBy: {
+    //     name: "Jarrod Smith",
+    //     avatar: "/student2.jpg"
+    //   }
+    // },
     {
-      id: 2,
-      title: "DJ my birthday",
-      description: "3-hour set, bring your own controller. Pop & indie vibes.",
-      price: "$80",
-      location: "Student Union Hall",
-      postedAt: "2 h ago",
+      id: 4,
+      title: "Move dorm furniture",
+      description: "Need two strong people to shift a sofa (+pizza).",
+      price: "$20 each",
+      location: "North Residence",
+      postedAt: "1 day ago",
       postedBy: {
-        name: "Jarrod Smith",
-        avatar: "/student2.jpg"
+        name: "Ollie Grant",
+        avatar: "/student4.jpg"
       }
     },
     {
@@ -67,18 +79,6 @@ export default function HomePage({ onNewNotification }: { onNewNotification: () 
       postedBy: {
         name: "Mia Wu",
         avatar: "/miawu.png"
-      }
-    },
-    {
-      id: 4,
-      title: "Move dorm furniture",
-      description: "Need two strong people to shift a sofa (+pizza).",
-      price: "$20 each",
-      location: "North Residence",
-      postedAt: "1 day ago",
-      postedBy: {
-        name: "Ollie Grant",
-        avatar: "/student4.jpg"
       }
     },
     {
@@ -108,8 +108,12 @@ export default function HomePage({ onNewNotification }: { onNewNotification: () 
       {/* Main content area with scrolling */}
       <main className="flex-1 overflow-y-auto pb-16">
         {/* Header */}
-        <header className="sticky top-0 bg-base-100 p-4 border-b z-10">
-          <h1 className="text-2xl font-bold text-center">Gig Listings</h1>
+        <header className="sticky top-0 bg-base-100 p-1 z-10">
+          <div className="relative">
+            <div className="absolute top-0.5 left-1 w-12 h-12">
+              <img src="/GIG logo.png" alt="GIG" className="w-full h-full object-cover rounded-full" />
+            </div>
+          </div>
         </header>
 
         {/* Gig listings */}
