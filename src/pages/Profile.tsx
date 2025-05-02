@@ -42,17 +42,14 @@ const Profile: React.FC = () => {
   
   // Updated activity data - more casual and authentic
   const recentActivity = [
-    { id: 1, type: 'post', content: 'Just DJ\'d the wildest house party at Lincoln College. My ears are still ringing! 🎧🔥', time: '2 hours ago' },
-    { id: 2, type: 'job', content: 'New gig alert! Bartending at The Alchemist this weekend. Come through for free drinks (jk my manager will see this)', time: '4 hours ago' },
-    { id: 3, type: 'post', content: 'Anyone need their bike fixed? Bored and broke - student discount available 🔧🚲', time: '1 day ago' },
+    { id: 1, type: 'post', content: 'Mid term break next week, hmp for any odd jobs!', time: '2 hours ago' },
+    { id: 2, type: 'job', content: 'Bartending at The Alchemist. Come through for free drinks', time: '4 hours ago' },
+    { id: 3, type: 'post', content: 'Ripped my trousers, anyone know how to sew?', time: '1 day ago' },
+    { id: 4, type: 'project', content: 'DJ for Anime Society presidents drinks ', time: '3 days ago' },
+    { id: 5, type: 'project', content: 'Jimmy bike repair - bike seat coming off', time: '2 weeks ago' }
   ];
   
-  // Updated projects that match his skills
-  const projects = [
-    { id: 1, title: 'Summer DJ Residency', description: 'Spinning every Thursday at Club Velvet in East London. House, techno, and whatever else makes you move.', image: '/images/dj_project.jpg' },
-    { id: 2, title: 'Pop-Up Cocktail Workshop', description: 'Teaching broke students how to make fancy drinks on a budget. BYOB and a shaker.', image: '/images/cocktail_project.jpg' },
-    { id: 3, title: 'Bike Repair Clinic', description: 'Monthly fix-it-yourself workshop by the Oxford canal. Tools provided, knowledge shared freely.', image: '/images/bike_project.jpg' },
-  ];
+
   return (
     <div className="min-h-screen bg-base-200">
       {/* Mobile app header with back button */}
@@ -194,12 +191,6 @@ const Profile: React.FC = () => {
               Posts
             </button>
             <button 
-              className={`tab flex-1 ${activeTab === 'projects' ? 'tab-active' : ''}`}
-              onClick={() => setActiveTab('projects')}
-            >
-              Projects
-            </button>
-            <button 
               className={`tab flex-1 ${activeTab === 'activity' ? 'tab-active' : ''}`}
               onClick={() => setActiveTab('activity')}
             >
@@ -222,7 +213,19 @@ const Profile: React.FC = () => {
                     <div className="form-control">
                       <textarea className="textarea textarea-bordered h-24" placeholder="Write your post here..."></textarea>
                     </div>
-                    <div className="card-actions justify-end">
+                    <div className="card-actions justify-between items-center mt-4">
+                      <div className="flex gap-2">
+                        <button className="btn btn-ghost btn-circle btn-sm">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                        </button>
+                        <button className="btn btn-ghost btn-circle btn-sm">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                          </svg>
+                        </button>
+                      </div>
                       <button className="btn btn-primary">Post</button>
                     </div>
                   </div>
@@ -230,50 +233,30 @@ const Profile: React.FC = () => {
                 
                 <div className="divider">Recent Posts</div>
                 
-                <div className="card card-bordered mb-4">
-                  <div className="card-body">
-                    <h2 className="card-title">Looking for DJ jobs</h2>
-                    <p>Mid term break next week, open to taking any odd jobs!</p>
-                    <div className="card-actions">
-                      <div className="badge badge-outline">DJ</div>
-                      <div className="badge badge-outline">Bartending</div>
-                    </div>
-                    <div className="flex justify-between items-center mt-4">
-                      <span className="text-sm opacity-70">Posted 3 days ago</span>
-                      <div className="flex gap-2">
-                        <button className="btn btn-circle btn-ghost btn-sm">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                          </svg>
-                        </button>
-                        <button className="btn btn-circle btn-ghost btn-sm">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                          </svg>
-                        </button>
+                {recentActivity
+                  .filter(activity => activity.type === 'post')
+                  .map(post => (
+                    <div key={post.id} className="card card-bordered mb-4">
+                      <div className="card-body">
+                        <p className="text-lg">{post.content}</p>
+                        <div className="flex justify-between items-center mt-4">
+                          <span className="text-sm opacity-70">{post.time}</span>
+                          <div className="flex gap-2">
+                            <button className="btn btn-circle btn-ghost btn-sm">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                              </svg>
+                            </button>
+                            <button className="btn btn-circle btn-ghost btn-sm">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            
-            {activeTab === 'projects' && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {projects.map(project => (
-                  <div key={project.id} className="card card-bordered bg-base-100 shadow-md">
-                    <figure className="h-48 bg-gray-300 flex items-center justify-center">
-                      <div className="text-gray-600">Project Image</div>
-                    </figure>
-                    <div className="card-body">
-                      <h2 className="card-title">{project.title}</h2>
-                      <p>{project.description}</p>
-                      <div className="card-actions justify-end">
-                        <button className="btn btn-sm btn-primary">View Details</button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             )}
             
@@ -294,11 +277,8 @@ const Profile: React.FC = () => {
                             {activity.type === 'post' && (
                               <div className="badge badge-info">POST</div>
                             )}
-                            {activity.type === 'like' && (
-                              <div className="badge badge-success">LIKE</div>
-                            )}
-                            {activity.type === 'comment' && (
-                              <div className="badge badge-warning">COMMENT</div>
+                            {(activity.type === 'job' || activity.type === 'project') && (
+                              <div className="badge badge-primary">GIG</div>
                             )}
                             <div>{activity.content}</div>
                           </div>
