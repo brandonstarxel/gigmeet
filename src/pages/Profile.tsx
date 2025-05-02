@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 
 interface UserStats {
-  followers: number;
-  following: number;
-  posts: number;
+  friends: number;
+  jobs: number;
 }
 
 interface UserDetails {
@@ -18,12 +17,6 @@ interface UserDetails {
   age: number;
   university: string;
   skills: string[];
-  achievements: {
-    id: number;
-    title: string;
-    description: string;
-    year: string;
-  }[];
 }
 
 const Profile: React.FC = () => {
@@ -31,57 +24,35 @@ const Profile: React.FC = () => {
   
   // Mock user data - in a real app, this would come from an API or context
   const user: UserDetails = {
-    name: "Jane Ligma balls",
-    username: "@janedoe",
-    bio: "UI/UX Designer passionate about creating intuitive and beautiful interfaces. Coffee enthusiast. Traveler.",
-    occupation: "Senior Designer at DesignCo",
-    location: "San Francisco, CA",
-    avatar: "https://img.daisyui.com/images/profile/demo/yellingcat@192.webp", // Using the provided image
+    name: "Raymond Z",
+    username: "@stingray",
+    bio: "Broke but talented finalist. I can DJ, bartend, cook, fix bikes, and lift heavy boxes.",
+    occupation: "Undergrad student & side hussle king",
+    location: "London, UK",
+    avatar: "/raymond_profile.jpg", // Using the provided image
     coverPhoto: "/images/cover.jpg", // You'd use a real image path
     stats: {
-      followers: 1420,
-      following: 356,
-      posts: 42
+      friends: 23,
+      jobs: 4
     },
-    age: 28,
-    university: "Stanford University - Bachelor of Fine Arts",
-    skills: ["UI/UX Design", "Figma", "Adobe Creative Suite", "Prototyping", "User Research", "Front-end Development"],
-    achievements: [
-      {
-        id: 1,
-        title: "Design Innovation Award",
-        description: "Received the Design Innovation Award for the health app interface redesign",
-        year: "2024"
-      },
-      {
-        id: 2,
-        title: "Design Conference Speaker",
-        description: "Featured speaker at the International Design Conference",
-        year: "2023"
-      },
-      {
-        id: 3,
-        title: "Portfolio of the Year",
-        description: "Selected as Portfolio of the Year by Design Magazine",
-        year: "2022"
-      }
-    ]
+    age: 22,
+    university: "Oxford University - Bachelor of Arts",
+    skills: ["🎧 DJ", "🍸 Bartending", "👨‍🍳 Cooking (for girls only)", "🔧 Bike Fixing", "💪 Moving heavy boxes (I gym)", "📸 Wannabe Model"]
   };
-
-  // Mock activity data - would come from an API in a real app
+  
+  // Updated activity data - more casual and authentic
   const recentActivity = [
-    { id: 1, type: 'post', content: 'Shared a new design portfolio', time: '2 hours ago' },
-    { id: 2, type: 'like', content: 'Liked "Modern UI Principles"', time: '4 hours ago' },
-    { id: 3, type: 'comment', content: 'Commented on "Design Trends 2025"', time: '1 day ago' },
+    { id: 1, type: 'post', content: 'Just DJ\'d the wildest house party at Lincoln College. My ears are still ringing! 🎧🔥', time: '2 hours ago' },
+    { id: 2, type: 'job', content: 'New gig alert! Bartending at The Alchemist this weekend. Come through for free drinks (jk my manager will see this)', time: '4 hours ago' },
+    { id: 3, type: 'post', content: 'Anyone need their bike fixed? Bored and broke - student discount available 🔧🚲', time: '1 day ago' },
   ];
-
-  // Sample projects
+  
+  // Updated projects that match his skills
   const projects = [
-    { id: 1, title: 'E-commerce Redesign', description: 'Complete UI/UX overhaul for an e-commerce platform', image: '/images/project1.jpg' },
-    { id: 2, title: 'Health App', description: 'Mobile app interface for health tracking', image: '/images/project2.jpg' },
-    { id: 3, title: 'Dashboard UI Kit', description: 'Modular components for admin dashboards', image: '/images/project3.jpg' },
+    { id: 1, title: 'Summer DJ Residency', description: 'Spinning every Thursday at Club Velvet in East London. House, techno, and whatever else makes you move.', image: '/images/dj_project.jpg' },
+    { id: 2, title: 'Pop-Up Cocktail Workshop', description: 'Teaching broke students how to make fancy drinks on a budget. BYOB and a shaker.', image: '/images/cocktail_project.jpg' },
+    { id: 3, title: 'Bike Repair Clinic', description: 'Monthly fix-it-yourself workshop by the Oxford canal. Tools provided, knowledge shared freely.', image: '/images/bike_project.jpg' },
   ];
-
   return (
     <div className="min-h-screen bg-base-200">
       {/* Mobile app header with back button */}
@@ -131,12 +102,17 @@ const Profile: React.FC = () => {
                   <div className="flex-grow">
                     <h1 className="text-2xl font-bold">{user.name}</h1>
                     <p className="text-sm opacity-70">{user.username}</p>
-                    <div className="mt-2 flex">
-                      <button className="btn btn-sm btn-primary mr-2">Follow</button>
-                      <button className="btn btn-sm btn-outline">Message</button>
+                    <div className="mt-2 flex gap-4">
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-lg">{user.stats.friends}</span>
+                        <span className="text-sm opacity-70">Friends</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-lg text-primary">{user.stats.jobs}</span>
+                        <span className="text-sm opacity-70">Jobs</span>
+                      </div>
                     </div>
                   </div>
-                  
                   <div className="flex-shrink-0">
                     <button className="btn btn-sm btn-ghost">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -149,6 +125,7 @@ const Profile: React.FC = () => {
                 {/* Bio and stats */}
                 <div className="w-full">
                   <p className="mb-4">{user.bio}</p>
+                  
                   
                   <div className="flex flex-wrap gap-4 text-sm mb-6">
                     {user.occupation && (
@@ -187,22 +164,7 @@ const Profile: React.FC = () => {
                     </div>
                   </div>
                   
-                  <div className="stats bg-base-200 shadow-sm mb-6 w-full">
-                    <div className="stat">
-                      <div className="stat-title">Posts</div>
-                      <div className="stat-value text-primary">{user.stats.posts}</div>
-                    </div>
-                    
-                    <div className="stat">
-                      <div className="stat-title">Followers</div>
-                      <div className="stat-value">{user.stats.followers}</div>
-                    </div>
-                    
-                    <div className="stat">
-                      <div className="stat-title">Following</div>
-                      <div className="stat-value">{user.stats.following}</div>
-                    </div>
-                  </div>
+
                   
                   {/* Skills Section */}
                   <div className="mb-6">
@@ -220,61 +182,28 @@ const Profile: React.FC = () => {
         </div>
       </div>
       
-      {/* Tabs and content */}
-      {/* Bottom navigation for mobile */}
-      <div className="btm-nav bg-base-100 border-t border-base-200 lg:hidden">
-        <button className="text-primary">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-          </svg>
-          <span className="btm-nav-label">Home</span>
-        </button>
-        <button className="active">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
-          <span className="btm-nav-label">Profile</span>
-        </button>
-        <button>
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
-          </svg>
-          <span className="btm-nav-label">Projects</span>
-        </button>
-        <button>
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-          </svg>
-          <span className="btm-nav-label">Alerts</span>
-        </button>
-      </div>
+
 
       <div className="container mx-auto px-4 pb-24 lg:pb-12">
         <div className="bg-base-100 rounded-box shadow-md">
-          <div className="tabs tabs-bordered">
+          <div className="tabs tabs-bordered w-full">
             <button 
-              className={`tab ${activeTab === 'posts' ? 'tab-active' : ''}`}
+              className={`tab flex-1 ${activeTab === 'posts' ? 'tab-active' : ''}`}
               onClick={() => setActiveTab('posts')}
             >
               Posts
             </button>
             <button 
-              className={`tab ${activeTab === 'projects' ? 'tab-active' : ''}`}
+              className={`tab flex-1 ${activeTab === 'projects' ? 'tab-active' : ''}`}
               onClick={() => setActiveTab('projects')}
             >
               Projects
             </button>
             <button 
-              className={`tab ${activeTab === 'activity' ? 'tab-active' : ''}`}
+              className={`tab flex-1 ${activeTab === 'activity' ? 'tab-active' : ''}`}
               onClick={() => setActiveTab('activity')}
             >
               Activity
-            </button>
-            <button 
-              className={`tab ${activeTab === 'achievements' ? 'tab-active' : ''}`}
-              onClick={() => setActiveTab('achievements')}
-            >
-              Achievements
             </button>
           </div>
           
@@ -303,11 +232,11 @@ const Profile: React.FC = () => {
                 
                 <div className="card card-bordered mb-4">
                   <div className="card-body">
-                    <h2 className="card-title">Latest Design Exploration</h2>
-                    <p>Just wrapped up a new design project exploring neomorphic UI styles for a client's dashboard.</p>
+                    <h2 className="card-title">Looking for DJ jobs</h2>
+                    <p>Mid term break next week, open to taking any odd jobs!</p>
                     <div className="card-actions">
-                      <div className="badge badge-outline">Design</div>
-                      <div className="badge badge-outline">UI</div>
+                      <div className="badge badge-outline">DJ</div>
+                      <div className="badge badge-outline">Bartending</div>
                     </div>
                     <div className="flex justify-between items-center mt-4">
                       <span className="text-sm opacity-70">Posted 3 days ago</span>
@@ -379,35 +308,6 @@ const Profile: React.FC = () => {
                     ))}
                   </tbody>
                 </table>
-              </div>
-            )}
-            
-            {activeTab === 'achievements' && (
-              <div className="space-y-6">
-                <h3 className="text-xl font-semibold">Past Achievements & Recognition</h3>
-                
-                <div className="timeline timeline-vertical">
-                  {user.achievements.map((achievement) => (
-                    <div key={achievement.id} className="timeline-item">
-                      <div className="timeline-middle">
-                        <div className="badge badge-primary">{achievement.year}</div>
-                      </div>
-                      <div className="timeline-start md:text-end mb-10">
-                        <div className="card bg-base-200">
-                          <div className="card-body p-4">
-                            <h3 className="card-title text-lg">{achievement.title}</h3>
-                            <p>{achievement.description}</p>
-                          </div>
-                        </div>
-                      </div>
-                      <hr/>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="flex justify-center mt-4">
-                  <button className="btn btn-outline btn-sm">View All Achievements</button>
-                </div>
               </div>
             )}
           </div>
