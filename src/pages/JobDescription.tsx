@@ -105,9 +105,9 @@ const JobDescription: React.FC = () => {
               <div>
                 <h2 className="text-xl font-semibold mb-2">Employer</h2>
                 <div className="flex items-center mb-4">
-                  <div className="avatar placeholder mr-4">
-                    <div className="bg-neutral text-neutral-content rounded-full w-16">
-                      <span className="text-xl">TS</span>
+                  <div className="avatar mr-4">
+                    <div className="w-16 rounded-full">
+                      <img src="/miawu.png" alt="Mia Wu" />
                     </div>
                   </div>
                   <div>
@@ -172,4 +172,3 @@ const JobDescription: React.FC = () => {
 };
 
 export default JobDescription;
-

@@ -80,9 +80,9 @@ const ChatInterface: React.FC = () => {
       <div className="w-full max-w-md bg-base-100 rounded-lg shadow-xl overflow-hidden flex flex-col h-[600px]">
         {/* Chat header */}
         <div className="bg-primary text-primary-content p-4 flex items-center">
-          <div className="avatar placeholder">
-            <div className="bg-primary-focus text-primary-content rounded-full w-10">
-              <span>MIA</span>
+          <div className="avatar">
+            <div className="w-10 rounded-full">
+              <img src="/miawu.png" alt="Mia Wu" />
             </div>
           </div>
           <div className="ml-3">
@@ -99,9 +99,9 @@ const ChatInterface: React.FC = () => {
               className={`chat ${message.sender === 'user' ? 'chat-end' : 'chat-start'} mb-4`}
             >
               {message.sender === 'mia' && (
-                <div className="chat-image avatar placeholder">
-                  <div className="bg-primary text-primary-content rounded-full w-10">
-                    <span>MIA</span>
+                <div className="chat-image avatar">
+                  <div className="w-10 rounded-full">
+                    <img src="/miawu.png" alt="Mia Wu" />
                   </div>
                 </div>
               )}
@@ -114,9 +114,9 @@ const ChatInterface: React.FC = () => {
           {/* Typing indicator */}
           {isTyping && (
             <div className="chat chat-start mb-4">
-              <div className="chat-image avatar placeholder">
-                <div className="bg-primary text-primary-content rounded-full w-10">
-                  <span>MIA</span>
+              <div className="chat-image avatar">
+                <div className="w-10 rounded-full">
+                  <img src="/miawu.png" alt="Mia Wu" />
                 </div>
               </div>
               <div className="chat-bubble bg-base-100">
