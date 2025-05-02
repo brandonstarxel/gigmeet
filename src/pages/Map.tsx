@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-// TypeScript interface for Friend data
+// TypeScript interface for Friend data with figure type
 interface Friend {
   id: number;
   name: string;
@@ -12,100 +12,122 @@ interface Friend {
   };
   days: string[];
   description: string;
+  figureType: 'standing' | 'handsOnHips' | 'handsUp' | 'pointingLeft' | 'pointingRight' | 'celebration';
+  color: string; // Color for the figure
 }
 
 const LondonSnapMap: React.FC = () => {
-  // London friends and their jobs
+  // London friends and their jobs with stick figures - positions spread out more
   const friends: Friend[] = [
     { 
       id: 1, 
       name: "Zara", 
-      job: "Barista", 
+      job: "Furniture Mover", 
       location: "Shoreditch", 
-      position: { x: 58, y: 40 },
+      position: { x: 68, y: 35 },
       days: ["Monday", "Wednesday", "Friday"],
-      description: "Working at an independent coffee shop. Says the tips are decent but her boss is moody."
+      description: "Working at an independent coffee shop. Says the tips are decent but her boss is moody.",
+      figureType: 'pointingLeft',
+      color: '#8B4513' // Brown
     },
     { 
       id: 2, 
       name: "Marcus", 
       job: "Tutor", 
       location: "Hampstead", 
-      position: { x: 48, y: 25 },
+      position: { x: 38, y: 18 },
       days: ["Tuesday", "Thursday"],
-      description: "Teaching maths to rich kids. £25/hour and the parents give him dinner sometimes."
+      description: "Teaching maths to rich kids. £25/hour and the parents give him dinner sometimes.",
+      figureType: 'handsOnHips',
+      color: '#8B4513' // Brown
     },
     { 
       id: 3, 
       name: "Aisha", 
-      job: "Retail Assistant", 
+      job: "Shopping Assistant", 
       location: "Oxford Street", 
-      position: { x: 48, y: 42 },
+      position: { x: 54, y: 42 },
       days: ["Saturday", "Sunday"],
-      description: "Working at Zara. Gets 30% staff discount which she says makes up for dealing with tourists."
+      description: "Working at Zara. Gets 30% staff discount which she says makes up for dealing with tourists.",
+      figureType: 'standing',
+      color: '#8B4513' // Brown
     },
     { 
       id: 4, 
       name: "James", 
       job: "Bartender", 
       location: "Soho", 
-      position: { x: 47, y: 45 },
+      position: { x: 46, y: 47 },
       days: ["Thursday", "Friday", "Saturday"],
-      description: "Mixing cocktails at a speakeasy. Late nights but says the atmosphere is worth it."
+      description: "Mixing cocktails at a speakeasy. Late nights but says the atmosphere is worth it.",
+      figureType: 'pointingRight',
+      color: '#8B4513' // Brown
     },
     { 
       id: 5, 
       name: "Sofia", 
       job: "Dog Walker", 
       location: "Notting Hill", 
-      position: { x: 35, y: 44 },
+      position: { x: 28, y: 45 },
       days: ["Monday", "Wednesday", "Friday"],
-      description: "Walking posh dogs. Flexible hours and gets to be outdoors, but has to carry a lot of poop bags."
+      description: "Walking posh dogs. Flexible hours and gets to be outdoors, but has to carry a lot of poop bags.",
+      figureType: 'celebration',
+      color: '#8B4513' // Brown
     },
     { 
       id: 6, 
       name: "Liam", 
       job: "Food Delivery", 
       location: "Clapham", 
-      position: { x: 47, y: 65 },
+      position: { x: 52, y: 80 },
       days: ["Tuesday", "Thursday", "Friday", "Saturday"],
-      description: "Deliveroo rider. Makes his own schedule but says the hills are killing his legs."
+      description: "Deliveroo rider. Makes his own schedule but says the hills are killing his legs.",
+      figureType: 'handsUp',
+      color: '#8B4513' // Brown
     },
     { 
       id: 7, 
       name: "Maya", 
       job: "Museum Guide", 
       location: "South Kensington", 
-      position: { x: 40, y: 50 },
+      position: { x: 32, y: 58 },
       days: ["Monday", "Tuesday", "Sunday"],
-      description: "Working at the Science Museum. Loves explaining exhibits to kids but gets tired of answering the same questions."
+      description: "Working at the Science Museum. Loves explaining exhibits to kids but gets tired of answering the same questions.",
+      figureType: 'handsOnHips',
+      color: '#8B4513' // Brown
     },
     { 
       id: 8, 
       name: "Theo", 
-      job: "DJ", 
+      job: "Catsitting", 
       location: "Brixton", 
-      position: { x: 48, y: 70 },
+      position: { x: 55, y: 82 },
       days: ["Friday", "Saturday"],
-      description: "Playing at a local club. Late nights but says the vibe and networking opportunities are worth it."
+      description: "Playing at a local club. Late nights but says the vibe and networking opportunities are worth it.",
+      figureType: 'standing',
+      color: '#8B4513' // Brown
     },
     { 
       id: 9, 
       name: "Olivia", 
       job: "Photographer", 
       location: "Camden", 
-      position: { x: 48, y: 35 },
+      position: { x: 40, y: 29 },
       days: ["Wednesday", "Saturday"],
-      description: "Taking photos at events and for small businesses. Unpredictable schedule but good for her portfolio."
+      description: "Taking photos at events and for small businesses. Unpredictable schedule but good for her portfolio.",
+      figureType: 'pointingLeft',
+      color: '#8B4513' // Brown
     },
     { 
       id: 10, 
       name: "Nathan", 
-      job: "Tour Guide", 
+      job: "Rent-A-Boyfriend", 
       location: "Westminster", 
-      position: { x: 45, y: 50 },
+      position: { x: 48, y: 50 },
       days: ["Monday", "Thursday", "Sunday"],
-      description: "Leading 'alternative history' walking tours. Loves telling stories but says his feet are always sore."
+      description: "Leading 'alternative history' walking tours. Loves telling stories but says his feet are always sore.",
+      figureType: 'pointingRight',
+      color: '#8B4513' // Brown
     }
   ];
 
@@ -246,6 +268,131 @@ const LondonSnapMap: React.FC = () => {
     };
   }, [isDragging]);
   
+  // Function to render stick figure based on type
+  const renderStickFigure = (figureType: Friend['figureType'], color: string, isSelected: boolean) => {
+    const size = isSelected ? 40 : 32;
+    const strokeWidth = isSelected ? 3 : 2;
+    const scale = isSelected ? 1.2 : 1;
+    
+    // Common styles for all figures
+    const svgStyle = {
+      transform: `scale(${scale})`,
+      transition: 'all 0.3s ease',
+      filter: isSelected ? 'drop-shadow(0 0 4px white)' : 'none'
+    };
+    
+    switch (figureType) {
+      case 'standing':
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" style={svgStyle}>
+            {/* Head */}
+            <circle cx="12" cy="6" r="3.5" fill={color} />
+            {/* Body */}
+            <line x1="12" y1="9.5" x2="12" y2="18" stroke={color} strokeWidth={strokeWidth} />
+            {/* Arms */}
+            <line x1="12" y1="12" x2="8" y2="14" stroke={color} strokeWidth={strokeWidth} />
+            <line x1="12" y1="12" x2="16" y2="14" stroke={color} strokeWidth={strokeWidth} />
+            {/* Legs */}
+            <line x1="12" y1="18" x2="9" y2="22" stroke={color} strokeWidth={strokeWidth} />
+            <line x1="12" y1="18" x2="15" y2="22" stroke={color} strokeWidth={strokeWidth} />
+          </svg>
+        );
+        
+      case 'handsOnHips':
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" style={svgStyle}>
+            {/* Head */}
+            <circle cx="12" cy="6" r="3.5" fill={color} />
+            {/* Body */}
+            <line x1="12" y1="9.5" x2="12" y2="18" stroke={color} strokeWidth={strokeWidth} />
+            {/* Arms as hands on hips */}
+            <path d="M12,12 Q8,12 8,15" stroke={color} strokeWidth={strokeWidth} fill="none" />
+            <path d="M12,12 Q16,12 16,15" stroke={color} strokeWidth={strokeWidth} fill="none" />
+            {/* Legs */}
+            <line x1="12" y1="18" x2="9" y2="22" stroke={color} strokeWidth={strokeWidth} />
+            <line x1="12" y1="18" x2="15" y2="22" stroke={color} strokeWidth={strokeWidth} />
+          </svg>
+        );
+        
+      case 'handsUp':
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" style={svgStyle}>
+            {/* Head */}
+            <circle cx="12" cy="6" r="3.5" fill={color} />
+            {/* Body */}
+            <line x1="12" y1="9.5" x2="12" y2="18" stroke={color} strokeWidth={strokeWidth} />
+            {/* Arms up */}
+            <line x1="12" y1="12" x2="8" y2="8" stroke={color} strokeWidth={strokeWidth} />
+            <line x1="12" y1="12" x2="16" y2="8" stroke={color} strokeWidth={strokeWidth} />
+            {/* Legs */}
+            <line x1="12" y1="18" x2="9" y2="22" stroke={color} strokeWidth={strokeWidth} />
+            <line x1="12" y1="18" x2="15" y2="22" stroke={color} strokeWidth={strokeWidth} />
+          </svg>
+        );
+        
+      case 'pointingLeft':
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" style={svgStyle}>
+            {/* Head */}
+            <circle cx="12" cy="6" r="3.5" fill={color} />
+            {/* Body */}
+            <line x1="12" y1="9.5" x2="12" y2="18" stroke={color} strokeWidth={strokeWidth} />
+            {/* Arms - one pointing left */}
+            <line x1="12" y1="12" x2="5" y2="12" stroke={color} strokeWidth={strokeWidth} />
+            <line x1="12" y1="12" x2="16" y2="14" stroke={color} strokeWidth={strokeWidth} />
+            {/* Legs */}
+            <line x1="12" y1="18" x2="9" y2="22" stroke={color} strokeWidth={strokeWidth} />
+            <line x1="12" y1="18" x2="15" y2="22" stroke={color} strokeWidth={strokeWidth} />
+          </svg>
+        );
+        
+      case 'pointingRight':
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" style={svgStyle}>
+            {/* Head */}
+            <circle cx="12" cy="6" r="3.5" fill={color} />
+            {/* Body */}
+            <line x1="12" y1="9.5" x2="12" y2="18" stroke={color} strokeWidth={strokeWidth} />
+            {/* Arms - one pointing right */}
+            <line x1="12" y1="12" x2="19" y2="12" stroke={color} strokeWidth={strokeWidth} />
+            <line x1="12" y1="12" x2="8" y2="14" stroke={color} strokeWidth={strokeWidth} />
+            {/* Legs */}
+            <line x1="12" y1="18" x2="9" y2="22" stroke={color} strokeWidth={strokeWidth} />
+            <line x1="12" y1="18" x2="15" y2="22" stroke={color} strokeWidth={strokeWidth} />
+          </svg>
+        );
+        
+      case 'celebration':
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" style={svgStyle}>
+            {/* Head */}
+            <circle cx="12" cy="6" r="3.5" fill={color} />
+            {/* Body */}
+            <line x1="12" y1="9.5" x2="12" y2="18" stroke={color} strokeWidth={strokeWidth} />
+            {/* Arms up in celebration */}
+            <line x1="12" y1="12" x2="7" y2="7" stroke={color} strokeWidth={strokeWidth} />
+            <line x1="12" y1="12" x2="17" y2="7" stroke={color} strokeWidth={strokeWidth} />
+            {/* Legs */}
+            <line x1="12" y1="18" x2="9" y2="22" stroke={color} strokeWidth={strokeWidth} />
+            <line x1="12" y1="18" x2="15" y2="22" stroke={color} strokeWidth={strokeWidth} />
+          </svg>
+        );
+        
+      default:
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" style={svgStyle}>
+            {/* Default standing figure */}
+            <circle cx="12" cy="6" r="3.5" fill={color} />
+            <line x1="12" y1="9.5" x2="12" y2="18" stroke={color} strokeWidth={strokeWidth} />
+            <line x1="12" y1="12" x2="8" y2="14" stroke={color} strokeWidth={strokeWidth} />
+            <line x1="12" y1="12" x2="16" y2="14" stroke={color} strokeWidth={strokeWidth} />
+            <line x1="12" y1="18" x2="9" y2="22" stroke={color} strokeWidth={strokeWidth} />
+            <line x1="12" y1="18" x2="15" y2="22" stroke={color} strokeWidth={strokeWidth} />
+          </svg>
+        );
+    }
+  };
+  
   return (
     <div className="min-h-screen bg-base-200 p-4 pt-8">
       <div className="max-w-5xl mx-auto">
@@ -315,9 +462,9 @@ const LondonSnapMap: React.FC = () => {
                     height: '100%'
                   }}
                 >
-                  {/* Using a placeholder image for the map */}
+                  {/* Using the london-map.png image */}
                   <img 
-                    src="/api/placeholder/1200/1200" 
+                    src="/london-map.png" 
                     alt="Map of London"
                     className="w-full h-full object-cover"
                     draggable="false"
@@ -327,7 +474,7 @@ const LondonSnapMap: React.FC = () => {
                   {filteredFriends.map(friend => (
                     <div 
                       key={friend.id}
-                      className={`absolute cursor-pointer transition-all duration-300 ease-in-out ${selectedFriend === friend.id ? 'scale-125 z-10' : 'scale-100'}`}
+                      className={`absolute cursor-pointer transition-all duration-300 ease-in-out z-${selectedFriend === friend.id ? '20' : '10'}`}
                       style={{ 
                         left: `${friend.position.x}%`, 
                         top: `${friend.position.y}%`,
@@ -338,13 +485,21 @@ const LondonSnapMap: React.FC = () => {
                         setSelectedFriend(friend.id);
                       }}
                     >
-                      <div className="avatar placeholder">
-                        <div className="bg-primary text-base-100 rounded-full w-10 h-10 ring ring-primary ring-offset-base-100 ring-offset-2">
-                          <span>{friend.name.charAt(0)}</span>
-                        </div>
+                      {/* Stick figure icon */}
+                      <div className="flex items-center justify-center">
+                        {renderStickFigure(friend.figureType, friend.color, selectedFriend === friend.id)}
                       </div>
-                      <div className={`absolute top-12 left-1/2 transform -translate-x-1/2 bg-primary text-primary-content px-2 py-1 rounded text-xs whitespace-nowrap transition-opacity ${selectedFriend === friend.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-70'}`}>
-                        {friend.name}: {friend.job}
+                      
+                      {/* Name and job label */}
+                      <div 
+                        className={`absolute top-12 left-1/2 transform -translate-x-1/2 bg-white text-gray-800 px-3 py-1.5 rounded-full text-xs whitespace-nowrap transition-all shadow-md ${
+                          selectedFriend === friend.id ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+                        }`}
+                        style={{
+                          borderLeft: `3px solid ${friend.color}`
+                        }}
+                      >
+                        <span className="font-bold">{friend.name}</span>: {friend.job}
                       </div>
                     </div>
                   ))}
@@ -371,10 +526,8 @@ const LondonSnapMap: React.FC = () => {
                     return (
                       <>
                         <div className="flex mb-4 items-center">
-                          <div className="avatar placeholder mr-4">
-                            <div className="bg-primary text-neutral-content rounded-full w-16">
-                              <span className="text-xl">{friend.name.charAt(0)}</span>
-                            </div>
+                          <div className="mr-4 flex items-center justify-center" style={{ width: '64px', height: '64px' }}>
+                            {renderStickFigure(friend.figureType, friend.color, true)}
                           </div>
                           <div>
                             <h3 className="font-bold text-xl">{friend.name}</h3>
@@ -383,14 +536,25 @@ const LondonSnapMap: React.FC = () => {
                         </div>
                         
                         <div className="mb-4">
-                          <div className="badge badge-lg badge-primary mb-2">{friend.job}</div>
+                          <div 
+                            className="badge badge-lg mb-2 text-white"
+                            style={{ backgroundColor: friend.color }}
+                          >
+                            {friend.job}
+                          </div>
                           <p>{friend.description}</p>
                         </div>
                         
                         <div className="card-title text-sm mt-6 mb-2">Working Days</div>
                         <div className="flex flex-wrap gap-1">
                           {friend.days.map(day => (
-                            <span key={day} className="badge badge-outline">{day}</span>
+                            <span 
+                              key={day} 
+                              className="badge badge-outline"
+                              style={{ borderColor: friend.color }}
+                            >
+                              {day}
+                            </span>
                           ))}
                         </div>
                       </>
@@ -399,7 +563,7 @@ const LondonSnapMap: React.FC = () => {
                 </div>
               ) : (
                 <div className="flex items-center justify-center h-64 opacity-50">
-                  <p>Click on a pin to see job details</p>
+                  <p>Click on a friend to see job details</p>
                 </div>
               )}
             </div>
@@ -429,10 +593,8 @@ const LondonSnapMap: React.FC = () => {
                     >
                       <td>
                         <div className="flex items-center gap-3">
-                          <div className="avatar placeholder">
-                            <div className="bg-primary text-neutral-content rounded-full w-8">
-                              <span>{friend.name.charAt(0)}</span>
-                            </div>
+                          <div className="w-10 h-10 flex items-center justify-center">
+                            {renderStickFigure(friend.figureType, friend.color, false)}
                           </div>
                           <div>{friend.name}</div>
                         </div>
@@ -442,7 +604,13 @@ const LondonSnapMap: React.FC = () => {
                       <td className="hidden md:table-cell">
                         <div className="flex flex-wrap gap-1">
                           {friend.days.map(day => (
-                            <span key={`${friend.id}-${day}`} className="badge badge-outline badge-xs">{day.substring(0, 3)}</span>
+                            <span 
+                              key={`${friend.id}-${day}`} 
+                              className="badge badge-outline badge-xs"
+                              style={{ borderColor: friend.color }}
+                            >
+                              {day.substring(0, 3)}
+                            </span>
                           ))}
                         </div>
                       </td>
