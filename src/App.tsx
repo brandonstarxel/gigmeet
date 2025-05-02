@@ -4,17 +4,23 @@ import Profile from './pages/Profile';
 import JobDescription from './pages/JobDescription';
 import Chat from './pages/Chat';
 import Match from './pages/Match';
+import Toolbar from './components/Toolbar';
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/job-description" element={<JobDescription />} />
-        <Route path="/chat" element={<Chat />} />
-        <Route path="/match" element={<Match />} />
-      </Routes>
+      <div className="h-screen flex flex-col">
+        <main className="flex-grow pb-16">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/job-description" element={<JobDescription />} />
+            <Route path="/chat" element={<Chat />} />
+            <Route path="/match" element={<Match />} />
+          </Routes>
+        </main>
+        <Toolbar />
+      </div>
     </Router>
   );
 }
