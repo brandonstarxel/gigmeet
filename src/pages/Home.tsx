@@ -1,6 +1,5 @@
 "use client";
 
-import { User, Home, MessageSquare } from 'lucide-react';
 import { useState } from "react";
 
 export default function HomePage() {
@@ -8,48 +7,63 @@ export default function HomePage() {
   const [gigs] = useState([
     {
       id: 1,
-      title: "Website Development",
-      description: "Need a developer to build a responsive website for my business",
-      price: "$500",
-      location: "Remote",
-      postedBy: "John Doe",
-      postedAt: "2 hours ago"
+      title: "Fix my bike",
+      description: "Chain keeps slipping—need someone with tools & know-how.",
+      price: "$30",
+      location: "On-campus",
+      postedAt: "45 min ago",
+      postedBy: {
+        name: "Sam Riley",
+        avatar: "/student1.jpg"
+      }
     },
     {
       id: 2,
-      title: "Logo Design",
-      description: "Looking for a creative designer to create a modern logo for my startup",
-      price: "$200",
-      location: "Remote",
-      postedBy: "Jane Smith",
-      postedAt: "5 hours ago"
+      title: "DJ my birthday",
+      description: "3-hour set, bring your own controller. Pop & indie vibes.",
+      price: "$80",
+      location: "Student Union Hall",
+      postedAt: "2 h ago",
+      postedBy: {
+        name: "Jarrod Smith",
+        avatar: "/student2.jpg"
+      }
     },
     {
       id: 3,
-      title: "Content Writing",
-      description: "Need articles written for my tech blog, 5 articles per week",
-      price: "$300",
-      location: "Remote",
-      postedBy: "Mike Johnson",
-      postedAt: "1 day ago"
+      title: "Calc II tutoring",
+      description: "Help me prep for Monday’s integration quiz (2 hrs).",
+      price: "$25/hour",
+      location: "Library café",
+      postedAt: "6 h ago",
+      postedBy: {
+        name: "Chloe Patel",
+        avatar: "/student3.jpg"
+      }
     },
     {
       id: 4,
-      title: "Mobile App Testing",
-      description: "Looking for QA testers for my iOS application",
-      price: "$25/hour",
-      location: "Remote",
-      postedBy: "Sarah Williams",
-      postedAt: "2 days ago"
+      title: "Move dorm furniture",
+      description: "Need two strong people to shift a sofa (+pizza).",
+      price: "$20 each",
+      location: "North Residence",
+      postedAt: "1 day ago",
+      postedBy: {
+        name: "Ollie Grant",
+        avatar: "/student4.jpg"
+      }
     },
     {
       id: 5,
-      title: "Social Media Management",
-      description: "Need someone to manage Instagram and Facebook accounts",
-      price: "$350/month",
+      title: "Poster design for club night",
+      description: "Looking for a bold, eye-catchy A3 poster—PSD preferred.",
+      price: "$50",
       location: "Remote",
-      postedBy: "Alex Brown",
-      postedAt: "3 days ago"
+      postedAt: "2 days ago",
+      postedBy: {
+        name: "Danny DeVito",
+        avatar: "/student5.jpg"
+      }
     }
   ]);
 
@@ -67,15 +81,33 @@ export default function HomePage() {
           {gigs.map((gig) => (
             <div key={gig.id} className="card bg-base-200 shadow-md">
               <div className="card-body p-4">
+                {/* top row: avatar + name + price */}
                 <div className="flex justify-between items-start">
-                  <h2 className="card-title text-lg">{gig.title}</h2>
+                  <div className="flex items-center gap-2">
+                    <div className="avatar">
+                      <div className="w-20 h-20 rounded-full">
+                        <img src={gig.postedBy.avatar} alt={gig.postedBy.name} className="w-full h-full object-cover rounded-full" />
+                      </div>
+                    </div>
+                    <span className="text-lg font-bold">{gig.postedBy.name}</span>
+                  </div>
+
                   <div className="badge badge-primary">{gig.price}</div>
                 </div>
-                <p className="text-sm mt-2">{gig.description}</p>
+
+                {/* title */}
+                <h2 className="text-lg font-semibold mt-2">{gig.title}</h2>
+
+                {/* description */}
+                <p className="text-sm mt-1">{gig.description}</p>
+
+                {/* location & time */}
                 <div className="flex justify-between items-center mt-3 text-xs text-base-content/70">
                   <span>{gig.location}</span>
                   <span>{gig.postedAt}</span>
                 </div>
+
+                {/* action */}
                 <div className="card-actions justify-end mt-2">
                   <button className="btn btn-sm btn-outline">View Details</button>
                 </div>
@@ -84,19 +116,6 @@ export default function HomePage() {
           ))}
         </div>
       </main>
-
-      {/* Bottom navigation */}
-      <div className="btm-nav btm-nav-sm fixed bottom-0 bg-base-100 border-t">
-        <button className="text-base-content">
-          <User size={20} />
-        </button>
-        <button className="active text-primary">
-          <Home size={20} />
-        </button>
-        <button className="text-base-content">
-          <MessageSquare size={20} />
-        </button>
-      </div>
     </div>
   );
 }
